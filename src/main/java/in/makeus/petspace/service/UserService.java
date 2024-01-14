@@ -33,18 +33,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final RedisService redisService;
-    private final AwsS3Uploader awsS3Uploader;
     private final UserRepository userRepository;
 
-
-    @Value("${default.image.url}")
-    private String defaultProfileImage;
 
     public UserResponseDto join(UserJoinRequestDto joinRequestDto) {
 
         validateSignupDto(joinRequestDto);
 
-        User user = joinRequestDto.toEntity(defaultProfileImage);
+        User user = joinRequestDto.toEntity("defaultProfileImage");
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.encodePassword(encodedPassword);
         userRepository.save(user);

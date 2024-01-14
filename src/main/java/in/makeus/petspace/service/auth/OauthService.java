@@ -30,9 +30,6 @@ public class OauthService {
     private final JwtProvider jwtProvider;
     private final RedisService redisService;
 
-    @Value("${default.image.url}")
-    private String defaultProfileImage;
-
     @Transactional
     public LoginTokenResponseDto login(String providerName, OauthRequestDto requestDto) {
         ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);
@@ -82,6 +79,6 @@ public class OauthService {
     }
 
     private void addDefaultProfileImage(Map<String, Object> userAttributes) {
-        userAttributes.put("default_profile_image", defaultProfileImage);
+        userAttributes.put("default_profile_image", "defaultProfileImage");
     }
 }
