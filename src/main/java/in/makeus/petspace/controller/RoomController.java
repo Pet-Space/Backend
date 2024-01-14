@@ -26,7 +26,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/api/v1")
 public class RoomController {
     private final FavoriteService favoriteService;
     private final RoomService roomService;

@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @Slf4j
 public class ReviewController {
