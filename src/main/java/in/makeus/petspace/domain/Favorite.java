@@ -1,0 +1,56 @@
+package in.makeus.petspace.domain;
+
+import in.makeus.petspace.domain.user.User;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Favorite {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "favorite_id")
+    private Long id;
+
+    private boolean isClicked;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    @Builder
+    public Favorite(User user, Room room, boolean isClicked) {
+        this.user = user;
+        if (user != null) {
+            user.getFavorites().add(this);
+        }
+        this.room = room;
+        if (room != null) {
+            room.getFavorites().add(this);
+        }
+        this.isClicked = isClicked;
+    }
+
+    public void changeFavoriteClickStatus() {
+        this.isClicked = !isClicked;
+    }
+}
